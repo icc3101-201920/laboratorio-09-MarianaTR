@@ -99,6 +99,15 @@ namespace Laboratorio_8_OOP_201920
             Card tempCard = CreateTempCard(cardId);
             hand.AddCard(tempCard);
             deck.DestroyCard(cardId);
+
+            foreach (Card card in Deck.Cards)
+            {
+                EnumEffect e = card.CardEffect;
+                if (Enum.IsDefined(typeof(EnumEffect), e))
+                {
+                    OnCardPlayer(card);
+                }
+            }
         }
         public void PlayCard(int cardId, EnumType buffRow = EnumType.None)
         {
@@ -108,6 +117,14 @@ namespace Laboratorio_8_OOP_201920
             if (tempCard is CombatCard)
             {
                 board.AddCard(tempCard, this.Id);
+                foreach (Card card in Deck.Cards)
+                {
+                    EnumEffect e = card.CardEffect;
+                    if (Enum.IsDefined(typeof(EnumEffect), e))
+                    {
+                        OnCardPlayer(card);
+                    }
+                }
             }
             else
             {
@@ -118,6 +135,14 @@ namespace Laboratorio_8_OOP_201920
                 else
                 {
                     board.AddCard(tempCard);
+                }
+                foreach (Card card in Deck.Cards)
+                {
+                    EnumEffect e = card.CardEffect;
+                    if (Enum.IsDefined(typeof(EnumEffect), e))
+                    {
+                        OnCardPlayer(card);
+                    }
                 }
             }
             hand.DestroyCard(cardId);
@@ -133,6 +158,14 @@ namespace Laboratorio_8_OOP_201920
             hand.AddCard(tempDeckCard);
             deck.DestroyCard(deckCardId);
             deck.AddCard(tempCard);
+            foreach (Card card in Deck.Cards)
+            {
+                EnumEffect e = card.CardEffect;
+                if (Enum.IsDefined(typeof(EnumEffect), e))
+                {
+                    OnCardPlayer(card);
+                }
+            }
         }
 
         public void FirstHand()
@@ -185,6 +218,16 @@ namespace Laboratorio_8_OOP_201920
                 attackPoints += board.GetAttackPoints(e)[Id];
             }
             return new int[] { attackPoints };
+        }
+
+        public event EventHandler<JugadorEventArgs> CardPlayer;
+
+        public virtual void OnCardPlayer(Card card)
+        {
+            if (CardPlayer != null)
+            {
+                CardPlayer(this, new JugadorEventArgs() { Card = card, Py = this });
+            }
         }
     }
 }

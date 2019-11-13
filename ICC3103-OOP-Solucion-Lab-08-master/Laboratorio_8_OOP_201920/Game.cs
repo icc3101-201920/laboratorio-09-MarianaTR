@@ -220,6 +220,9 @@ namespace Laboratorio_8_OOP_201920
                 else
                 {
                     Boolean cycle = true;
+                    SubscribirEvento(players[0]);
+                    SubscribirEvento(players[1]);
+                    RestablecerValores(players[0], players[1]);
                     while (cycle)
                     {
                         ActivePlayer = Players[firstOrSecondUser];
@@ -321,7 +324,12 @@ namespace Laboratorio_8_OOP_201920
                         //Destruir Cartas
                         BoardGame.DestroyCards();
                     }
+
+                    
                 }
+                DesubcribirEvento(players[0]);
+                DesubcribirEvento(players[1]);
+
                 actualData["decks"] = Decks;
                 actualData["captains"] = Captains;
                 actualData["players"] = Players;
@@ -445,6 +453,51 @@ namespace Laboratorio_8_OOP_201920
                 File.Delete(fileName);
             }
             
+        }
+
+        private void OnPlayerCard(object source, JugadorEventArgs e)
+        {
+            Effect.ApplyEffect(e.Card, e.Py == players[0] ? players[0] : players[1], e.Py == players[1] ? players[1] : players[0], this.boardGame);
+        }
+
+        private void SubscribirEvento(Player player)
+        {
+            player.CardPlayer += this.OnPlayerCard;
+        }
+
+        private void DesubcribirEvento(Player player)
+        {
+            player.CardPlayer -= this.OnPlayerCard;
+
+        }
+
+        public static void RestablecerValores(Player pl1, Player pl2)
+        {
+            foreach (Card card in pl1.Deck.Cards)
+            {
+                if (card.Type == EnumType.melee || card.Type == EnumType.range || card.Type == EnumType.longRange)
+                {
+                    CombatCard combatCard = (CombatCard)card;
+                    if (combatCard.VistaAttackPoints != -1)
+                    {
+                        combatCard.AttackPoints = combatCard.VistaAttackPoints;
+                        combatCard.VistaAttackPoints = -1;
+                    }
+                }
+            }
+
+            foreach (Card card in pl2.Deck.Cards)
+            {
+                if (card.Type == EnumType.melee || card.Type == EnumType.range || card.Type == EnumType.longRange)
+                {
+                    CombatCard combatCard = (CombatCard)card;
+                    if (combatCard.VistaAttackPoints != -1)
+                    {
+                        combatCard.AttackPoints = combatCard.VistaAttackPoints;
+                        combatCard.VistaAttackPoints = -1;
+                    }
+                }
+            }
         }
     }
 }
