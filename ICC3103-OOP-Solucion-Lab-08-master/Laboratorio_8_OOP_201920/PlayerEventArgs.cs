@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Laboratorio_8_OOP_201920
 {
-    public class JugadorEventArgs : EventArgs
+    public class PlayerEventArgs : EventArgs
     {
         Card card;
         Player py;

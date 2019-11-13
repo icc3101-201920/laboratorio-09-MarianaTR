@@ -455,19 +455,19 @@ namespace Laboratorio_8_OOP_201920
             
         }
 
-        private void OnPlayerCard(object source, JugadorEventArgs e)
+        private void OnPlayedCard(object source, PlayerEventArgs e)
         {
             Effect.ApplyEffect(e.Card, e.Py == players[0] ? players[0] : players[1], e.Py == players[1] ? players[1] : players[0], this.boardGame);
         }
 
         private void SubscribirEvento(Player player)
         {
-            player.CardPlayer += this.OnPlayerCard;
+            player.CardPlayer += this.OnPlayedCard;
         }
 
         private void DesubcribirEvento(Player player)
         {
-            player.CardPlayer -= this.OnPlayerCard;
+            player.CardPlayer -= this.OnPlayedCard;
 
         }
 

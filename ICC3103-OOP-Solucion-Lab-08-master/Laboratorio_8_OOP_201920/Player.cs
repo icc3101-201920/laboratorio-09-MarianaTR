@@ -105,7 +105,7 @@ namespace Laboratorio_8_OOP_201920
                 EnumEffect e = card.CardEffect;
                 if (Enum.IsDefined(typeof(EnumEffect), e))
                 {
-                    OnCardPlayer(card);
+                    OnCardPlayed(card);
                 }
             }
         }
@@ -122,7 +122,7 @@ namespace Laboratorio_8_OOP_201920
                     EnumEffect e = card.CardEffect;
                     if (Enum.IsDefined(typeof(EnumEffect), e))
                     {
-                        OnCardPlayer(card);
+                        OnCardPlayed(card);
                     }
                 }
             }
@@ -141,7 +141,7 @@ namespace Laboratorio_8_OOP_201920
                     EnumEffect e = card.CardEffect;
                     if (Enum.IsDefined(typeof(EnumEffect), e))
                     {
-                        OnCardPlayer(card);
+                        OnCardPlayed(card);
                     }
                 }
             }
@@ -163,7 +163,7 @@ namespace Laboratorio_8_OOP_201920
                 EnumEffect e = card.CardEffect;
                 if (Enum.IsDefined(typeof(EnumEffect), e))
                 {
-                    OnCardPlayer(card);
+                    OnCardPlayed(card);
                 }
             }
         }
@@ -220,13 +220,13 @@ namespace Laboratorio_8_OOP_201920
             return new int[] { attackPoints };
         }
 
-        public event EventHandler<JugadorEventArgs> CardPlayer;
+        public event EventHandler<PlayerEventArgs> CardPlayer;
 
-        public virtual void OnCardPlayer(Card card)
+        public virtual void OnCardPlayed(Card card)
         {
             if (CardPlayer != null)
             {
-                CardPlayer(this, new JugadorEventArgs() { Card = card, Py = this });
+                CardPlayer(this, new PlayerEventArgs() { Card = card, Py = this });
             }
         }
     }
